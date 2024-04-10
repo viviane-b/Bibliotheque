@@ -92,11 +92,10 @@ create table Commande(
 
 commit;
 
-
 begin transaction;
 
 --Livre(ISBN, Titre, Année_de_publication, Édition, Langue, #Genre)
-insert into Livre values 
+insert into Livre values
 	('7839567285016', 'Fondation', 1954, 'Larousse', 'Francais', 'Science-fiction'),
 	('6545654565555', 'La vie devant soi', 1971, 'Larousse', 'Francais', 'Drame'),
 	('7381983746272', 'La Comédie Humaine', 1842, 'folio', 'Francais', 'Comédie'),
@@ -107,7 +106,7 @@ insert into Livre values
     ('3333333333333', 'Les Aventures dArthur Gordon Pym', 1838, 'Penguin', 'Francais', 'Thriller'),
     ('4444444444444', 'Soumission', 2015, 'Flammarion', 'Francais', 'Science-fiction'),
     ('5555555555555', 'La Divine Comédie', 1320, 'Folio', 'Italien', 'Poésie');
-	
+
 -- Auteur(AuteurID, Prénom, Nom, Nationalité, DateNaissance)
 insert into Auteur values
 	(1, 'Albert', 'Camus', 'Francais', '1913-11-07' ),
@@ -116,11 +115,11 @@ insert into Auteur values
 	(4, 'Houellebecq', 'Michel', 'Francais', '1956-02-26'),
 	(5, 'Gary', 'Romain', 'Russe', '1914-05-21'),
 	(6, 'Ajar', 'Émile', 'Francais', '1914-05-21'),
-	(7, 'Asimov', 'Isaac', 'American', '1920-01-02'),
+	(7, 'Asimov', 'Isaac', 'Americain', '1920-01-02'),
 	(8, 'Kurosaka', 'Bob', 'Japonais', '1953-06-30'),
 	(9, 'Orwell', 'George', 'Anglais', '1903-06-25'),
 	(10, 'Druon', 'Maurice', 'Francais', '1918-04-23');
-	
+
 -- Écrit(#ISBN, #AuteurID)
 insert into Ecrit values
 	('7839567285016', 7),
@@ -137,41 +136,26 @@ insert into Ecrit values
 
 
 -- Disponible(#ISBN, NoCopie, disponible)
-insert into Disponible values 
-	('7839567285016', 1, true),
+insert into Disponible values
+	('7839567285016', 1, false),
 	('7839567285016', 2, true),
 	('6545654565555', 1, false),
 	('7381983746272', 1, false),
 	('7381983746272', 2, false),
 	('7381983746272', 3, false),
 	('1232123212321', 1, true),
-	('6787678767876', 1, true),
-	('6787678767876', 2, false),
-	('6787678767876', 3, false),
+	('6787678767876', 1, false),
+	('6787678767876', 2, true),
+	('6787678767876', 3, true),
 	('6787678767876', 4, true),
 	('1111111111111', 1, false),
 	('1111111111111', 2, false),
-    ('2222222222222', 1, true),
-    ('3333333333333', 1, false),
-    ('4444444444444', 1, true),
-	('4444444444444', 2, true),
-    ('5555555555555', 1, false);
+    ('2222222222222', 1, false),
+    ('3333333333333', 1, true),
+    ('4444444444444', 1, false),
+	('4444444444444', 2, false),
+    ('5555555555555', 1, true);
 
---Adhérent (NoAdhérent, Prénom, Nom, #idAdresse, nbLivreCommandé, noTéléphone)
-insert into Adherent values 
-	(1, 'Sparrow', 'Jack', 011, 2, '5147895134'),
-	(2, 'Solo', 'Han', 02, 0, '4536829876'),
-	(3, 'Brown', 'Emmett', 09, 3, '1112223333'),
-	(4, 'Everdeen', 'Katniss', 04, 0, '6785436767'),
-	(5, 'Chigurh', 'Anton', 05, 0, '7895671234'),
-	(6, 'Balboa', 'Robert', 06, 1, '8673476925'),
-	(7, 'Corleone', 'Vito', 07, 2, '6471433654'),
-	(8, 'Poulain', 'Amélie', 08, 0, '5468249087'),
-	(9, 'Finch', 'Atticus', 03, 1, '5268549023'),
-	(10, 'Bateman', 'Patrick', 010, 2, '6471438945'),
-	(11, 'Baggins', 'Bilbo', 012, 3, '8902749103'),
-	(12, 'Gunderson', 'Marge', 01, 1, '8902738945');
-	
 insert into Adresse values
 	(1, 2284, 'Bellevue', 'Montréal', '0H0H0H', 'Canada'),
 	(2, 2425, 'Crimson', 'Drummondville', 'H4R7T2', 'Canada'),
@@ -186,21 +170,40 @@ insert into Adresse values
 	(11, 909, 'Perle Noire', 'Zurich', 'BLKPRL', 'Suisse'),
 	(12, 1, 'Bag-ends', 'Shire', 'MDLERT', 'Nouvelle-Zélande');
 
-
+--Adhérent (NoAdhérent, Prénom, Nom, #idAdresse, nbLivreCommandé, noTéléphone)
+insert into Adherent values
+	(1, 'Sparrow', 'Jack', 011, 2, '5147895134'),
+	(2, 'Solo', 'Han', 02, 0, '4536829876'),
+	(3, 'Brown', 'Emmett', 09, 3, '1112223333'),
+	(4, 'Everdeen', 'Katniss', 04, 0, '6785436767'),
+	(5, 'Chigurh', 'Anton', 05, 0, '7895671234'),
+	(6, 'Balboa', 'Robert', 06, 1, '8673476925'),
+	(7, 'Corleone', 'Vito', 07, 2, '6471433654'),
+	(8, 'Poulain', 'Amélie', 08, 0, '5468249087'),
+	(9, 'Finch', 'Atticus', 03, 1, '5268549023'),
+	(10, 'Bateman', 'Patrick', 010, 2, '6471438945'),
+	(11, 'Baggins', 'Bilbo', 012, 3, '8902749103'),
+	(12, 'Gunderson', 'Marge', 01, 1, '8902738945');
 
 insert into Emprunt values
-	(1, '7839567285016', 1, 1, '2024-04-01', '2024-04-15'),
-	(2, '1232123212321', 1, 3, '2024-04-02', '2024-04-16'),
-	(3, '2222222222222', 1, 6, '2024-04-03', '2024-04-17'),
-	(4, '4444444444444', 2, 7, '2024-04-04', '2024-04-18'),
-	(5, '6787678767876', 1, 9, '2024-04-05', '2024-04-19'),
-	(6, '5555555555555', 1, 11, '2024-04-06', '2024-04-20'),
-	(7, '3333333333333', 1, 4, '2024-04-07', '2024-04-21'),
-	(8, '6545654565555', 1, 10, '2024-04-08', '2024-04-22'),
-	(9, '1111111111111', 1, 5, '2024-04-09', '2024-04-23'),
-	(10, '7381983746272', 1, 2, '2024-04-10', '2024-04-24');
+	(1, '7839567285016', 1, 1, '2024-04-01', '2024-04-15', 'En cours'),
+	(2, '1232123212321', 1, 3, '2024-04-02', '2024-04-16', 'Retourné'),
+	(3, '2222222222222', 1, 6, '2024-04-03', '2024-04-17', 'En retard'),
+	(4, '4444444444444', 2, 7, '2024-04-04', '2024-04-18','En cours'),
+	(5, '6787678767876', 1, 9, '2024-04-05', '2024-04-19','En cours'),
+	(6, '5555555555555', 1, 11, '2024-04-06', '2024-04-20','Retourné'),
+	(7, '3333333333333', 1, 4, '2024-04-07', '2024-04-21', 'Retourné'),
+	(8, '6545654565555', 1, 10, '2024-04-08', '2024-04-22','En cours'),
+	(9, '1111111111111', 1, 5, '2024-04-09', '2024-04-23', 'En retard'),
+	(10, '7381983746272', 1, 2, '2024-04-10', '2024-04-24', 'En retard'),
+	(11, '4444444444444', 1, 1, '2024-04-11', '2024-04-25','En retard'),
+	(12, '7381983746272', 2, 4, '2024-04-11', '2024-04-25', 'En cours'),
+	(13, '7381983746272', 3, 7, '2024-04-11', '2024-04-25', 'En retard'),
+	(14, '1111111111111', 2, 2, '2024-04-12', '2024-04-26', 'En cours');
 
-insert into Commande values 
+
+
+insert into Commande values
 	(1, '1232123212321', 1, 4, 'En cours'),
 	(2, '5555555555555', 1, 8, 'Honorée'),
 	(3, '4444444444444', 2, 5, 'Honorée'),
@@ -212,7 +215,35 @@ insert into Commande values
 	(9, '2222222222222', 1, 7, 'En cours'),
 	(10, '7839567285016', 2, 1, 'Annulée');
 
-	
-commit;	
 
-select * from livre
+
+commit;
+
+select * from livre;
+
+-- Les titres et les auteurs de livres de science-fiction écrits par des auteurs américains
+WITH r1 AS (
+  SELECT a.nom, a.prenom, e.ISBN
+  FROM (SELECT * FROM Auteur a WHERE a.nationalite = 'Americain') as a
+  JOIN Ecrit e ON a.auteurID = e.auteurID
+),
+r2 AS (
+  SELECT titre, ISBN
+  FROM Livre
+  WHERE genre = 'Science-fiction'
+)
+SELECT r2.titre, r1.prenom, r1.nom
+FROM r1
+JOIN r2 ON r1.ISBN = r2.ISBN;
+
+-- Voir si un certain livre (ex: 1984) est disponible & le nombre de copies disponibles
+WITH r1 AS (
+	SELECT * FROM Livre l where l.titre = '1984'
+),
+r2 AS (
+	SELECT * FROM Disponible d WHERE d.booldisponible = true
+)
+SELECT titre, count(NoCopie) as copies_dispo
+FROM (r1 JOIN r2 ON r1.ISBN = r2.ISBN)
+GROUP BY titre
+
