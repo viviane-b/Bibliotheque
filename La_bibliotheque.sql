@@ -250,19 +250,20 @@ GROUP BY titre
 	
 -- requêtes #3 et #4 
 	
--- #3 pour le numéro d’adherent 1 (pour l’exemple), on peut voir dans son historique d’emprunt, tous ses retards avec cette view; le titre du livre et le nom de l’auteur d’affiche.
+-- #3 pour le numéro d’adherent 3 (pour l’exemple), on peut voir dans son historique d’emprunt, tous ses retards avec cette view; le titre du livre et le nom de l’auteur d’affiche.
 begin transaction;
 
 create view empruntRetard_view as 
 select titre, nom, prenom 
 FROM 
 (with r2 as 
-(with r1 as (select * from emprunt natural joinecrit)
+(with r1 as (select * from emprunt natural join ecrit)
 select * from r1 natural join auteur)
-select * from r2 natural joinlivre)
-where statutemprunt='En retard' and noadherent='1';
+select * from r2 natural join livre)
+where statutemprunt='En retard' and noadherent='3';
 
 commit;
+
 
 select * from empruntRetard_view
 	
