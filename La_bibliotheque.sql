@@ -247,3 +247,31 @@ SELECT titre, count(NoCopie) as copies_dispo
 FROM (r1 JOIN r2 ON r1.ISBN = r2.ISBN)
 GROUP BY titre
 
+	
+-- requêtes #3 et #4 
+	
+-- #3 pour le numéro d’adherent 1 (pour l’exemple), on peut voir dans son historique d’emprunt, tous ses retards avec cette view; le titre du livre et le nom de l’auteur d’affiche.
+begin transaction;
+
+create view empruntRetard_view as 
+select titre, nom, prenom 
+FROM 
+(with r2 as 
+(with r1 as (select * from emprunt natural joinecrit)
+select * from r1 natural join auteur)
+select * from r2 natural joinlivre)
+where statutemprunt='En retard' and noadherent='1';
+
+commit;
+
+select * from empruntRetard_view
+	
+-- #4 Voir les titres des livres des commandes en cours
+SELECT titre FROM commande NATURAL JOIN Livre
+
+
+
+
+
+
+
