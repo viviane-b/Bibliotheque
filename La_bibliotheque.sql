@@ -245,7 +245,7 @@ r2 AS (
 )
 SELECT titre, count(NoCopie) as copies_dispo
 FROM (r1 JOIN r2 ON r1.ISBN = r2.ISBN)
-GROUP BY titre
+GROUP BY titre;
 
 	 
 	
@@ -268,7 +268,7 @@ commit;
 
 
 -- requête #4 Voir les titres des livres des commandes en cours
-SELECT titre FROM commande NATURAL JOIN Livre
+SELECT titre FROM commande NATURAL JOIN Livre;
 
 	
 -- fonction/trigger update_disponibilite() pour le cas : quand l'état de l'emprunt d'un livre est modifié, sa disponibilité est mise à jour en conséquence
