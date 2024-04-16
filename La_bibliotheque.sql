@@ -279,6 +279,21 @@ CREATE TRIGGER nouveau_emprunt
         FOR EACH ROW
         EXECUTE PROCEDURE emprunterLivre();
 
+-- Ce qui se passe lorsqu'on fait un retour
+CREATE OR REPLACE FUNCTION retour()
+        RETURNS TRIGGER AS
+        $$BEGIN 
+        UPDATE disponible SET booldisponible = true 
+                WHERE (noCopie = NEW.noCopie AND ISBN = NEW.ISBN);
+        RETURN NEW;
+        END;
+        $$ language plpgsql;
+
+CREATE TRIGGER update_emprunt
+        BEFORE update ON emprunt 
+        FOR EACH ROW
+        EXECUTE PROCEDURE retour();
+
 -- Ce qui se passe quand on ajoute un livre a la bibli
 CREATE OR REPLACE FUNCTION nouveau_livre() 
     RETURNS TRIGGER AS $$
@@ -294,15 +309,19 @@ CREATE OR REPLACE FUNCTION nouveau_livre()
         RETURN NEW;
     END;
 $$ LANGUAGE plpgsql;
+                
 
 CREATE TRIGGER add_livre
         AFTER INSERT ON Livre 
         FOR EACH ROW
         EXECUTE PROCEDURE nouveau_livre();
 
--- Insertions & updates pour tester triggers 
+-- Insertions pour tester triggers 
 INSERT INTO Emprunt (idemprunt, isbn, nocopie, noadherent, datedebut, datefin, statutemprunt)
 VALUES (15, '7839567285016', 2, 2, '2024-09-23', '2024-10-23', 'En cours' );
+
+UPDATE emprunt SET statutEmprunt = 'Retourné' WHERE isbn = '4444444444444' AND noCopie = 1;
+
 INSERT INTO Livre values ('6767676767676', 'Fondation', 1954, 'Larousse', 'Francais', 'Science-fiction', 2);
 
 select * from disponible -- vérifier que les triggers ont marché 
