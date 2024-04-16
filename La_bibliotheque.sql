@@ -327,3 +327,66 @@ INSERT INTO Livre values ('6767676767676', 'Fondation', 1954, 'Larousse', 'Franc
 select * from disponible -- vérifier que les triggers ont marché 
 
 
+-- requête #3 pour le numéro d’adherent 3 (pour l’exemple), on peut voir dans son historique d’emprunt, tous ses retards avec cette view; le titre du livre et le nom de l’auteur d’affiche.
+begin transaction;
+
+create view empruntRetard_view as 
+select titre, nom, prenom 
+FROM 
+(with r2 as 
+(with r1 as (select * from emprunt natural join ecrit)
+select * from r1 natural join auteur)
+select * from r2 natural join livre)
+where statutemprunt='En retard' and noadherent='3';
+
+commit;
+
+-- test pour voir la vue empruntRetard_view
+--select * from empruntRetard_view
+
+
+-- requête #4 Voir les titres des livres des commandes en cours
+SELECT titre FROM commande NATURAL JOIN Livre;
+
+	
+-- fonction/trigger update_disponibilite() pour le cas : quand l'état de l'emprunt d'un livre est modifié, sa disponibilité est mise à jour en conséquence
+CREATE OR REPLACE FUNCTION update_disponibilite() RETURNS TRIGGER AS $$
+BEGIN
+	IF OLD.statutemprunt = 'En cours' AND NEW.statutemprunt = 'Retourné' THEN	
+		UPDATE disponible
+		SET booldisponible = true
+		WHERE ISBN = NEW.ISBN AND nocopie = NEW.nocopie;
+		
+	ELSIF OLD.statutemprunt = 'En retard' AND NEW.statutemprunt = 'Retourné' THEN	
+		UPDATE disponible
+		SET booldisponible = true
+		WHERE ISBN = NEW.ISBN AND nocopie = NEW.nocopie;
+		
+	ELSIF OLD.statutemprunt = 'Retourné' AND NEW.statutemprunt = 'En cours' THEN	
+		UPDATE disponible
+		SET booldisponible = false
+		WHERE ISBN = NEW.ISBN AND nocopie = NEW.nocopie;
+		
+	ELSIF OLD.statutemprunt = 'En cours' AND NEW.statutemprunt = 'En retard' THEN	
+		UPDATE disponible
+		SET booldisponible = false
+		WHERE ISBN = NEW.ISBN AND nocopie = NEW.nocopie;
+	
+	END IF;
+	RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER after_update_statutemprunt
+AFTER UPDATE OF statutemprunt ON emprunt
+FOR EACH ROW
+WHEN (OLD.statutemprunt IS DISTINCT FROM NEW.statutemprunt)
+EXECUTE FUNCTION update_disponibilite();
+
+-- Exemple de test pour update_disponibilite()
+--UPDATE bibliotheque.emprunt 
+--SET statutemprunt = 'Retourné'
+--WHERE idemprunt = '7';
+--select * from bibliotheque.disponible natural join bibliotheque.emprunt
+
+-- fin de la fonction update_disponibilite()
