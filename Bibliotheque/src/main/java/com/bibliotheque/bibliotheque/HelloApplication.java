@@ -18,6 +18,7 @@ import java.io.IOException;
 import static java.lang.System.exit;
 
 public class HelloApplication extends Application {
+    BiblioConnexion biblioConnexion;
     @Override
     public void start(Stage stage) throws IOException {
         var titr = new Text("Bibliothèque");
@@ -32,16 +33,16 @@ public class HelloApplication extends Application {
         text.setEditable(false);
 
         b1.setOnAction(x -> {
-            text.setText(q1Requete());
+            text.setText(biblioConnexion.q1Requete());
         });
         b2.setOnAction(x -> {
-            text.setText(q2Requete());
+            text.setText(biblioConnexion.q2Requete());
         });
         b3.setOnAction(x -> {
-            text.setText(q3Requete());
+            text.setText(biblioConnexion.q3Requete());
         });
         b4.setOnAction(x -> {
-            text.setText(q4Requete());
+            text.setText(biblioConnexion.q4Requete());
         });
 
         text.setWrapText(true);
@@ -66,7 +67,7 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+
         launch(args);
         exit(0);
     }
