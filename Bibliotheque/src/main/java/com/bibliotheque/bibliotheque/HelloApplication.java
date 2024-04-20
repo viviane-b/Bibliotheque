@@ -44,6 +44,7 @@ public class HelloApplication extends Application {
             text.setText(q4Requete());
         });
 
+        text.setWrapText(true);
 
 
 
@@ -71,16 +72,16 @@ public class HelloApplication extends Application {
     }
 
     private String q1Requete() {
-        return null;
+        return "q1 requete";
     }
     private String q2Requete() {
-        return null;
+        return "la requete de q2";
     }
     private String q3Requete() {
-        return null;
+        return "ici s'affichera la réponse numéro 3";
     }
     private String q4Requete() {
-        return null;
+        return "requete numéro 4";
     }
 
 }
