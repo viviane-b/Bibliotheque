@@ -10,7 +10,7 @@ import java.sql.*;
 public class BiblioConnexion {
     Connection connection;
 
-    BiblioConnexion() {
+    public BiblioConnexion() {
 
         String dbUrl = "jdbc:postgresql://localhost:5432/La_bibliotheque";
         String username = "postgres";
@@ -54,7 +54,7 @@ public class BiblioConnexion {
                 //     System.out.println(ISBN + " " + copiesDispo);
             }
 
-            connection.close();
+            // connection.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -62,6 +62,14 @@ public class BiblioConnexion {
 
 
 
+    }
+
+    public void closeConnection(Connection connection) {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public String q1Requete() {
@@ -140,7 +148,6 @@ public class BiblioConnexion {
         }
         return result;
     }
-
 
 
 }

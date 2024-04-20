@@ -18,9 +18,11 @@ import java.io.IOException;
 import static java.lang.System.exit;
 
 public class HelloApplication extends Application {
-    BiblioConnexion biblioConnexion;
+    static BiblioConnexion biblioConnexion = new BiblioConnexion();
+
     @Override
     public void start(Stage stage) throws IOException {
+
         var titr = new Text("Bibliothèque");
         titr.setFont(Font.font(35));
 
@@ -70,6 +72,7 @@ public class HelloApplication extends Application {
 
         launch(args);
         exit(0);
+        biblioConnexion.closeConnection(biblioConnexion.connection);
     }
 
     private String q1Requete() {
