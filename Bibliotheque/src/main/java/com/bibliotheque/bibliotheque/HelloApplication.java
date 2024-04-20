@@ -12,7 +12,6 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import java.sql.*;
 
 import java.io.IOException;
 
@@ -29,17 +28,37 @@ public class HelloApplication extends Application {
         Button b3 = new Button("Question 3");
         Button b4 = new Button("Question 4");
 
-        var aonhsant = new TextArea("haawa");
+        var text = new TextArea();
+        text.setEditable(false);
+
+        b1.setOnAction(x -> {
+            text.setText(q1Requete());
+        });
+        b2.setOnAction(x -> {
+            text.setText(q2Requete());
+        });
+        b3.setOnAction(x -> {
+            text.setText(q3Requete());
+        });
+        b4.setOnAction(x -> {
+            text.setText(q4Requete());
+        });
+
+
 
 
         VBox qqqq = new VBox(b1, b2, b3, b4);
-        var tooo = new HBox(qqqq, aonhsant);
+        qqqq.setAlignment(Pos.CENTER);
+        qqqq.setSpacing(10);
+        var tooo = new HBox(qqqq, text);
+        tooo.setAlignment(Pos.CENTER);
+        tooo.setSpacing(10);
         var truc = new VBox(titr, tooo);
         truc.setAlignment(Pos.CENTER);
 
 
 
-        Scene scene = new Scene(truc, 800, 600);
+        Scene scene = new Scene(truc, 600, 300);
         stage.setTitle("Bibliothèque");
         stage.setScene(scene);
         stage.show();
@@ -50,4 +69,18 @@ public class HelloApplication extends Application {
         launch(args);
         exit(0);
     }
+
+    private String q1Requete() {
+        return null;
+    }
+    private String q2Requete() {
+        return null;
+    }
+    private String q3Requete() {
+        return null;
+    }
+    private String q4Requete() {
+        return null;
+    }
+
 }
