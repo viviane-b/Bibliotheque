@@ -74,18 +74,4 @@ public class HelloApplication extends Application {
         exit(0);
         biblioConnexion.closeConnection(biblioConnexion.connection);
     }
-
-    private String q1Requete() {
-        return "q1 requete";
-    }
-    private String q2Requete() {
-        return "la requete de q2";
-    }
-    private String q3Requete() {
-        return "ici s'affichera la réponse numéro 3";
-    }
-    private String q4Requete() {
-        return "requete numéro 4";
-    }
-
 }
